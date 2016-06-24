@@ -28,11 +28,9 @@ def Int_Str(Int):
 class POS:
 	"""Class object for the Primitive Obfuscation Standard cipher, or POS for short.
 
-This cipher does not have a restricted blocksize or keysize. Likewise, because of the transposition rounds, ciphertext must be decrypted in the same sized blocks as it was encrypted. In mathy terms:
-encrypt(A)+encrypt(B) = C
-decrypt(C) =/= A+B
+As a stream cipher, there is no set block-size. Optimally, ciphertext must be decrypted in the same sized blocks as it was encrypted.
 
-On initialization, the given key is saved both into POS.key and POS.run. Encryption starts with key generation, and will continue until POS.run is at least the length of the given plaintext. Every key generation is numbered, and the number is modulated by the length of POS.key, and adds the byte at the resulting index of the key to every byte in the key. Every byte is also added with 1+x, where x is the index of each byte. (Note: all arithmetic performed on bytes is modulated by 256.) POS.key becomes the result and is added to POS.run. In short, the key is constantly altered into a running key.
+On initialization, the given key is saved both into POS.key and POS.run. Encryption starts with key generation, and will continue until POS.run is at least the length of the given plaintext. Every key generation is numbered, and the number is modulated by the length of POS.key, and adds the byte at the resulting index of the key to every byte in the key. Every byte is also added with 1+x, where x is the index of each byte. (Note: all arithmetic performed on bytes is modulated by 256.) POS.key becomes the result and is added to POS.run.
 
 The next step of encryption includes simple substitution and transposition rounds. Substitution simply adds the key bytes and state bytes. The eight rounds of transposition each take the corresponding bits in each byte of the key to produce a binary key. The first round takes the first bits, and the second take the second bits, and so on. Bytes in the state corresponding to 1 bits are rotated amongst themselves backward, and bytes corresponding to 0 are rotated forward. The bytes are rotated B times, where B is the number of the transposition round (1 to 8).
 
